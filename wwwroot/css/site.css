@@ -1,0 +1,8 @@
+﻿.body-content {
+    margin-top: 70px;
+}
+
+pre.prettyprint.prettyprinted {
+    border: none !important;
+    font-family: "Lucida Console", Monaco, monospace;
+}

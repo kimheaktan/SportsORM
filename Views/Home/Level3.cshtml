@@ -1,0 +1,112 @@
+@{
+    ViewData["Title"] = "Level 3";
+}
+
+<div class="well">
+    <p>Using the SportsORM, complete all the following queries and show their results on Level3.cshtml.</p>
+    <ol>
+        <li>...all teams, past and present, that Alexander Bailey has played with</li>
+        @foreach (var player in @ViewBag.AlexTeams)
+        {//it ViewModel was used, we could just do: Model.AllTeams, with without a second loop
+            @foreach (var team in player.AllTeams)
+            {
+                <p>@player.FullName() has been on @team.TeamOfPlayer.TeamName from @team.TeamOfPlayer.Location</p>
+            }
+            @foreach (var ct in ViewBag.AlexTeams)
+            {
+                <p>Curr teams are @ct.CurrentTeam.TeamName</p>
+            }
+        }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        @* @foreach (var player in ViewBag.CurrAlexTeams) *@
+        @* {
+            <p>@player.FullName() is currently playing for @player.CurrentTeam.TeamName from @player.CurrentTeam.Location</p>
+        } *@
+
+        <li>...all players, past and present, with the Manitoba Tiger-Cats</li>
+
+    @foreach (var team in ViewBag.ManitobaAllPlayers)
+    {
+        <h4>@team.TeamName has had:</h4>
+        @foreach (var player in team.AllPlayers)
+        {
+            <p> @player.PlayerOnTeam.FullName() </p>
+        }
+
+        <h4>Current players are</h4>
+        @foreach (var player in team.CurrentPlayers)
+        {
+            <p>@player.FullName()</p>
+        }
+    }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    @* @foreach (var team in ViewBag.ManitobaCurrPlayers)
+    {
+        <h4>And currently active players are </h4>
+        @foreach (var player in @team.CurrentPlayers)
+        {
+            <p>@player.FullName()</p>
+        }
+    } *@
+
+        <li>...all players who were formerly (but aren't currently) with the Wichita Vikings</li>
+@foreach (var team in ViewBag.WichitaNotCurrPlayers)
+{
+    <h4>@team.TeamName has these players who are not current</h4>
+    @foreach (var player in @team.AllPlayers)
+    {
+        <p>@player.PlayerOnTeam.FullName()</p>
+    }
+}
+
+        <li>...every team that Emily Sanchez played for before she joined the Indiana Royals</li>
+        @ViewBag.EmilyTeamB4Indiana.Count
+    @foreach (var player in ViewBag.EmilyTeamB4Indiana)
+    {
+        <h4>@player.FullName() had played for</h4>
+        @foreach (var team in player.AllTeams)
+        {
+            <p>@team.TeamOfPlayer.TeamName from @team.TeamOfPlayer.Location</p>
+        }
+    }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+        <li>...everyone named "Levi" who has ever played in the Atlantic Federation of Amateur Baseball Players</li>
+        @* @ViewBag.AtlanticLevi.Count  *@
+    @foreach (var league in ViewBag.AtlanticLevi)
+    {
+
+        @foreach (var team in league.Teams)
+        {
+            foreach (var player in team.AllPlayers)
+            {
+                if(@player.PlayerOnTeam.FirstName == "Levi")
+                {
+                    <p>@player.PlayerOnTeam.FullName() has played on team @team.TeamName in <h5>@league.Name</h5></p>
+                }
+            }
+        }
+    } 
+    
+
+        <li>...all players, sorted by the number of teams they've played for</li>
+        @ViewBag.allPlayers.Count
+
+        <table class="table table-striped">
+        <tr>
+            <th>Player Name</th>
+            <th>Team Count</th>
+            <th>Current Team</th>
+        </tr>
+        @foreach(var player in ViewBag.allPlayers)
+        {
+            <tr>
+                <td>@player.FirstName @player.LastName</td>
+                <td>@player.AllTeams.Count</td>
+                <td>@player.CurrentTeam.Location @player.CurrentTeam.TeamName </td>
+            </tr>
+        }
+    </table> 
+    </ol>
+</div>

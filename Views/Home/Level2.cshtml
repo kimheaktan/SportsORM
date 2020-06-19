@@ -1,0 +1,69 @@
+@model Team
+@{
+    ViewData["Title"] = "Level 2";
+}
+
+<div class="well">
+    <p>Using the SportsORM, complete all the following queries and show their results on Level2.cshtml.</p>
+    <ol>
+        <li>...all teams in the Atlantic Soccer Conference</li>
+        
+        @foreach (var t in ViewBag.AllTeamsInAtlantic)
+        {
+            <p>@t.TeamName from @t.CurrLeague.Name, L's ID: @t.CurrLeague.LeagueId</p>
+        }
+        
+        <li>...all (current) players on the Boston Penguins</li>
+        @ViewBag.CurrPlayersOnBoston.Count
+        @foreach (var p in ViewBag.CurrPlayersOnBoston)
+        {
+            <p>@p.FirstName plays for @p.CurrentTeam.TeamName in @p.CurrentTeam.Location </p>
+        }
+
+        <li>...all teams in the International Collegiate Baseball Conference</li>
+        @foreach (var t in ViewBag.TeamsInInterLeague)
+        {
+            <p>@t.TeamName plays for @t.CurrLeague.Name from @t.Location</p>
+        }
+
+        <li>...all teams in the American Conference of Amateur Football</li>
+        @foreach (var t in ViewBag.TeamsInAmLeague)
+        {
+            <p>@t.TeamName from @t.Location plays for @t.CurrLeague.Name</p>
+        }
+
+        <li>...all football teams</li>
+        @foreach (var t in ViewBag.AllFootTeam)
+        {
+            <p>@t.TeamName from @t.Location plays @t.CurrLeague.Sport</p>
+        }
+
+        <li>...all teams with a (current) player named "Sophia"</li>
+        @ViewBag.TeamsWithSophia.Count
+        @foreach (var p in ViewBag.TeamsWithSophia)
+        {   
+            <p>@p.CurrentTeam.TeamName has @p.FirstName @p.LastName</p>
+        }
+
+        <li>...everyone with the last name "Flores" who DOESN'T (currently) play for the Raptors (hint: think about ways you can filter data on the cshtml side)</li>
+        @foreach (var p in ViewBag.FloresNotForRaptor)
+        {
+            if(p.CurrentTeam.TeamName != "Raptors"){
+                <p>@p.FirstName @p.LastName plays for @p.CurrentTeam.TeamName </p>
+            @* } *@
+        }
+        }
+
+        <li>...all current players with the Manitoba Tiger-Cats</li>
+        @foreach (var p in ViewBag.CurrPlayersManitoba)
+        {
+            <p>@p.FirstName is playing for @p.CurrentTeam.TeamName from @p.CurrentTeam.Location</p>
+        }
+
+        <li>...all teams that have had 12 or more players</li>
+        @foreach (var t in ViewBag.MoreThan12)
+        {
+            <p>@t.TeamName has @t.AllPlayers.Count players</p>
+        }
+    </ol>
+</div>
